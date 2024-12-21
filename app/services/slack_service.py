@@ -1,5 +1,5 @@
 from app.services.database import save_message
-
+import datetime 
 async def handle_event(payload):
     """
     Handles incoming Slack events payload.
@@ -17,8 +17,8 @@ async def handle_event(payload):
         message_data = {
             "user": event["user"],
             "text": event["text"],
-            "channel": event["channel"],
-            "timestamp": event["ts"],
+            "channel": event.get("channel", "Unknown"),
+            "timestamp": event.get("event_ts", datetime.datetime.now().timestamp()) # Use current timestamp in unix if not available,
         }
         # Save message to MongoDB
         save_message(message_data)
