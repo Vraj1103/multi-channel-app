@@ -8,18 +8,13 @@ async def handle_event(payload):
         # Respond to Slack's challenge verification during setup
         return {"challenge": payload["challenge"]}
     
-    print(payload,'payload')
-    print(payload.get("event", {}),'payload events')
+    # print(payload,'payload')
+    # print(payload.get("event", {}),'payload events')
     # Process Slack Events
     event = payload.get("event", {})
     if event.get("type") == "message" and "subtype" not in event:
         # Extract message data
-        message_data = {
-            "user": event["user"],
-            "text": event["text"],
-            "channel": event.get("channel", "Unknown"),
-            "timestamp": event.get("event_ts", datetime.datetime.now().timestamp()) # Use current timestamp in unix if not available,
-        }
+        message_data = payload
         # Save message to MongoDB
         print("Saving message to MongoDB")
         save_message(message_data)
