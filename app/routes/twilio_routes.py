@@ -44,7 +44,7 @@ async def receive_sms(request: Request):
             "platform": "sms"
         }
         # Save the incoming message to MongoDB
-        save_message(message_data)
+        save_message(message_data,"sms")
         return {"detail": "Message received and saved"}
     except Exception as e:
         print(f"Error handling incoming SMS: {e}")
