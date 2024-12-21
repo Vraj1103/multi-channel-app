@@ -22,7 +22,7 @@ async def handle_event(payload):
         }
         # Save message to MongoDB
         print("Saving message to MongoDB")
-        save_message(message_data)
+        await save_message(message_data)
         print("Message saved")
         return {"ok": True}
 
