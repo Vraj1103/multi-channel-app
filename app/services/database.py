@@ -10,6 +10,7 @@ messages_collection = db.get_collection("messages")
 
 # Save Message to MongoDB
 def save_message(message_data):
+    print("In MongoDB")
     try:
         if message_data:
             messages_collection.insert_one(message_data)

@@ -21,7 +21,9 @@ async def handle_event(payload):
             "timestamp": event.get("event_ts", datetime.datetime.now().timestamp()) # Use current timestamp in unix if not available,
         }
         # Save message to MongoDB
+        print("Saving message to MongoDB")
         save_message(message_data)
+        print("Message saved")
         return {"ok": True}
 
     # Event not handled
