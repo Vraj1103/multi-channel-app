@@ -18,7 +18,8 @@ def verify_slack_request(headers, body):
             hashlib.sha256
         ).hexdigest()
     )
-
+    print(computed_signature,"computed_signature")
     slack_signature = headers.get("X-Slack-Signature")
+    print(slack_signature,"slack_signature")
     if not hmac.compare_digest(computed_signature, slack_signature):
         raise HTTPException(status_code=400, detail="Invalid signature")
