@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from app.config import settings
-from bson.json_util import dumps
-
+# from bson.json_util import dumps
+# import json
 
 client = MongoClient(settings.mongodb_uri)
 if client:
@@ -27,13 +27,8 @@ def get_messages():
 
         # Convert cursor to a list
         messages = list(messages_cursor)
-        messages_json = dumps(messages)
-        # The line `# print(f"Messages fetched: {messages_json}")` is a commented-out line of code in
-        # Python. It is using string formatting to include the variable `messages_json` in the printed
-        # message. However, since the line is commented out with `#`, it will not be executed when the
-        # code runs.
-        # print(f"Messages fetched: {messages_json}")
-        return messages_json
+        # messages_json = json.dumps(messages)
+        return messages
     except Exception as e:
         print(f"Error fetching messages: {e}")
         return []
