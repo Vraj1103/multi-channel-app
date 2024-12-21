@@ -3,10 +3,10 @@ from app.config import settings
 
 # Initialize MongoDB Client
 client = MongoClient(settings.mongodb_uri)
+if client:
+    print("Connected to MongoDB")
 db = client.get_database("slack_bot")
 
-if not db:
-    raise Exception("Database connection failed")
 
 # Collections
 messages_collection = db.get_collection("messages")
