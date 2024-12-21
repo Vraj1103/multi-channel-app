@@ -5,6 +5,9 @@ from app.config import settings
 client = MongoClient(settings.mongodb_uri)
 db = client.get_database("slack_bot")
 
+if not db:
+    raise Exception("Database connection failed")
+
 # Collections
 messages_collection = db.get_collection("messages")
 
@@ -13,6 +16,7 @@ def save_message(message_data):
     print("In MongoDB")
     try:
         if message_data:
+            print("Before saving message")
             messages_collection.insert_one(message_data)
             print(f"Message saved: {message_data}")
         else:
