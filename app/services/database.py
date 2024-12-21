@@ -13,12 +13,12 @@ db = client.get_database("slack_bot")
 messages_collection = db.get_collection("messages")
 
 # Save Message to MongoDB
-async def save_message(message_data):
+def save_message(message_data):
     print("In MongoDB")
     try:
         if message_data:
             print("Before saving message")
-            await messages_collection.insert_one(message_data)
+            messages_collection.insert_one(message_data)
             print(f"Message saved: {message_data}")
         else:
             print("No message data to save")
