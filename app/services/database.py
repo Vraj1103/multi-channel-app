@@ -40,46 +40,21 @@ def save_message(message_data,app:str):
             print(f"Error saving message: {e}")
 
 
-def get_messages(app:str):
-    if app == "slack":
-        try:
-            # print("In get_messages")
-            # Fetch all documents from the collection
-
-            messages_cursor = slack_messages_collection.find({}, {"timestamp": 1, "text": 1, "user": 1, "_id": 0})
-
-            # Convert cursor to a list
-            messages = list(messages_cursor)
-            # messages_json = json.dumps(messages)
-            return messages
-        except Exception as e:
-            print(f"Error fetching messages: {e}")
+def get_messages(app: str):
+    """
+    Fetch all messages for a specific app.
+    """
+    try:
+        if app == "slack":
+            messages_cursor = slack_messages_collection.find({}, {"_id": 0, "timestamp": 1, "text": 1, "user": 1})
+        elif app == "sms":
+            messages_cursor = sms_messages_collection.find({}, {"_id": 0, "timestamp": 1, "text": 1, "user": 1})
+        elif app == "whatsapp":
+            messages_cursor = whatsapp_messages_collection.find({}, {"_id": 0, "timestamp": 1, "text": 1, "user": 1})
+        else:
             return []
-    elif app == "sms":
-        try:
-            # print("In get_messages")
-            # Fetch all documents from the collection
 
-            messages_cursor = sms_messages_collection.find({}, {"timestamp": 1, "text": 1, "user": 1, "_id": 0})
-
-            # Convert cursor to a list
-            messages = list(messages_cursor)
-            # messages_json = json.dumps(messages)
-            return messages
-        except Exception as e:
-            print(f"Error fetching messages: {e}")
-            return []
-    elif app == "whatsapp":
-        try:
-            # print("In get_messages")
-            # Fetch all documents from the collection
-
-            messages_cursor = whatsapp_messages_collection.find({}, {"timestamp": 1, "text": 1, "user": 1, "_id": 0})
-
-            # Convert cursor to a list
-            messages = list(messages_cursor)
-            # messages_json = json.dumps(messages)
-            return messages
-        except Exception as e:
-            print(f"Error fetching messages: {e}")
-            return []
+        return list(messages_cursor)  # Convert cursor to a list
+    except Exception as e:
+        print(f"Error fetching messages for {app}: {e}")
+        return []
