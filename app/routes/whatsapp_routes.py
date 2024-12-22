@@ -30,6 +30,7 @@ async def whatsapp_webhook(request: Request):
     try:
         # Parse incoming request from Twilio
         data = await request.form()
+        print(f"Received WhatsApp message: {data}")
         message_data = {
             "user": data.get("From"),
             "channel_id": data.get("To"),
