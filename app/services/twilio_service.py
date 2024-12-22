@@ -2,7 +2,6 @@ from twilio.rest import Client
 from app.services.database import save_message
 from app.config import settings
 
-# Initialize Twilio client
 twilio_client = Client(settings.twilio_account_sid, settings.twilio_auth_token)
 
 def send_sms(to: str, body: str):
