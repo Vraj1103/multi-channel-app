@@ -45,7 +45,7 @@ async def handle_event(payload):
     event = payload.get("event", {})
     if event.get("type") == "message" and "subtype" not in event:
         # message_data = payload
-        print(payload,"payload")
+        # print(payload,"payload")
         user_id = payload["event"]["user"]
         user_name = get_user_name(user_id)
         # message_data = {"user_name": user_name,"platform":"slack", **message_data}
@@ -59,7 +59,7 @@ async def handle_event(payload):
             "channel_type": payload["event"]["channel_type"],
             "platform": "slack"
         }
-        print(type(message_data),"message_data_type")
+        # print(type(message_data),"message_data_type")
 
         if not isinstance(message_data, dict):
             raise ValueError("message_data must be a dictionary")
