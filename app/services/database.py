@@ -11,7 +11,7 @@ db_sms = client.get_database("sms_bot")
 db_whatsapp = client.get_database("whatsapp_bot")
 slack_messages_collection = db.get_collection("messages")
 sms_messages_collection = db_sms.get_collection("messages")
-whatsapp_messages_collection = db.get_collection("messages")
+whatsapp_messages_collection = db_whatsapp.get_collection("messages")
 
 def save_message(message_data,app:str):
     if app == "slack":
