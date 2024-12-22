@@ -34,8 +34,8 @@ async def whatsapp_webhook(request: Request):
         data = await request.form()
         # print(f"Received WhatsApp message: {data}")
         message_data = {
-            "user_name":data.get("ProfileName"),
-            "user": data.get("From"),
+            "user":data.get("ProfileName"),
+            "user_id": data.get("From"),
             "channel_id": data.get("To"),
             "text": data.get("Body"),
             "timestamp": str(datetime.now().timestamp()),
