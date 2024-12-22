@@ -1,7 +1,15 @@
 from fastapi import FastAPI
 from app.routes import slack, messages,twilio_routes,whatsapp_routes
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8000"],  # Add the origin of your frontend
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Include API Routes
 app.include_router(slack.router, prefix="/slack", tags=["Slack"])
