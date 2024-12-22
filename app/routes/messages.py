@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.services.database import get_messages
+from app.services.database import get_messages,save_message
 from app.services.slack_service import send_message
 from pydantic import BaseModel
 
@@ -25,6 +25,7 @@ def send_message_to_user(payload: MessageRequest):
     :return: Success or error response.
     """
     response = send_message(payload.channel_id, payload.text)
+    save_message(payload,"slack")
     if not response["ok"]:
         raise HTTPException(status_code=400, detail=response["error"])
     return {"detail": "Message sent successfully", "data": response["message"]}

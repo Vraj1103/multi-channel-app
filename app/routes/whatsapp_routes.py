@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, Request
 from app.services.whatsapp_service import send_whatsapp_message
 from app.services.database import save_message
 from pydantic import BaseModel
+# import datetime 
+from datetime import datetime
 
 router = APIRouter()
 class WhatsappMessageRequest(BaseModel):
@@ -36,7 +38,7 @@ async def whatsapp_webhook(request: Request):
             "user": data.get("From"),
             "channel_id": data.get("To"),
             "text": data.get("Body"),
-            "timestamp": data.get("Timestamp"),
+            "timestamp": str(datetime.now().timestamp()),
             "platform": "whatsapp"
         }
 
