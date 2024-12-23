@@ -3,6 +3,7 @@ import datetime
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from app.config import settings
+from app.services.whatsapp_service import send_whatsapp_message
 
 slack_client = WebClient(token=settings.slack_bot_token)
 
@@ -59,14 +60,17 @@ async def handle_event(payload):
             "channel_type": payload["event"]["channel_type"],
             "platform": "slack"
         }
-        # print(type(message_data),"message_data_type")
-
         if not isinstance(message_data, dict):
             raise ValueError("message_data must be a dictionary")
+        # print(type(message_data),"message_data_type")
         
-        # print message_data type
+        whatsapp_message = f"Slack message from {user_name}:\n{payload['event']['text']}"
+        whatsapp_number = settings.twilio_whatsapp_number
+        send_whatsapp_message(whatsapp_number, whatsapp_message)
+        print(f"Forwarded Slack message to WhatsApp: {whatsapp_message}")
+
         save_message(message_data,"slack")
-        # print("Message saved")
+
         return {"ok": True}
     # Event not handled
     return {"ok": False, "error": "Event type not supported"}

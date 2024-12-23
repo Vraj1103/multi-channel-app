@@ -8,7 +8,8 @@ class Settings(BaseSettings):
     twilio_auth_token: str
     twilio_phone_number: str
     twilio_whatsapp_number: str 
-
+    to_phone_number:str
+    slack_channel_id:str
     class Config:
         env_file = ".env"
 
