@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request
 from app.services.whatsapp_service import send_whatsapp_message
 from app.services.database import save_message
+from app.services.slack_service import send_message
 from pydantic import BaseModel
 # import datetime 
 from datetime import datetime
@@ -45,9 +46,15 @@ async def whatsapp_webhook(request: Request):
         # Save message to MongoDB
         save_message(message_data,"whatsapp")
         print(f"Incoming WhatsApp message: {message_data}")
+        slack_channel_id = "D086SPYJ0AC"
+        slack_message = f"WhatsApp message from {message_data['user']} ({message_data['user_id']}):\n{message_data['text']}"
+        slack_response = send_message(slack_channel_id, slack_message)
+
+        if not slack_response.get("ok"):
+            print(f"Error forwarding to Slack: {slack_response['error']}")
 
         # Respond to Twilio (mandatory)
-        return {"message": "Message received successfully!"}
+        return {"message": "Message received and forwarded to Slack successfully!"}
 
     except Exception as e:
         print(f"Error processing webhook: {e}")
