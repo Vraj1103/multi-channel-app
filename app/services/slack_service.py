@@ -65,7 +65,7 @@ async def handle_event(payload):
         # print(type(message_data),"message_data_type")
         
         whatsapp_message = f"Slack message from {user_name}:\n{payload['event']['text']}"
-        whatsapp_number = settings.twilio_whatsapp_number
+        whatsapp_number = settings.to_phone_number
         send_whatsapp_message(whatsapp_number, whatsapp_message)
         print(f"Forwarded Slack message to WhatsApp: {whatsapp_message}")
 
