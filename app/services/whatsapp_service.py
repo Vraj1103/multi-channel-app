@@ -15,6 +15,8 @@ def send_whatsapp_message(to: str, message: str):
     """
     try:
         # Send message via Twilio's API
+        print(f"to:",to)
+        print("from",settings.twilio_whatsapp_number)
         message_response = twilio_client.messages.create(
             from_=settings.twilio_whatsapp_number,
             to=to,
